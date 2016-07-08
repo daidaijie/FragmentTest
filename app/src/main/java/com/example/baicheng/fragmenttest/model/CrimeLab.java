@@ -1,6 +1,13 @@
 package com.example.baicheng.fragmenttest.model;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.baicheng.fragmenttest.dao.CrimeDbSchema;
+import com.example.baicheng.fragmenttest.dao.CrimeDbSchema.CrimeTable;
+import com.example.baicheng.fragmenttest.util.CrimeBaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,33 +19,45 @@ import java.util.UUID;
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
 
-    private List<Crime> mCrimes;
+
+    private Context mContext;
+
+    private SQLiteDatabase mDatabase;
 
     private CrimeLab(Context context) {
-        mCrimes = new ArrayList<>();
+
+        mContext = context.getApplicationContext();
+        mDatabase = new CrimeBaseHelper(mContext).getWritableDatabase();
+
     }
 
     public List<Crime> getCrimes() {
-        return mCrimes;
+        return new ArrayList<>();
     }
 
-    public Crime getCrime(UUID id){
-        for (Crime crime:mCrimes){
-            if (crime.getID().equals(id)){
-                return crime;
-            }
-        }
+    public Crime getCrime(UUID id) {
+
         return null;
     }
 
+    private static ContentValues getContentValues(Crime crime) {
+        ContentValues values = new ContentValues();
+        values.put(CrimeTable.Cols.UUID, crime.getID().toString());
+        values.put(CrimeTable.Cols.TITLE, crime.getTitle());
+        values.put(CrimeTable.Cols.DATE, crime.getDate().toString());
+        values.put(CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
+        return values;
+    }
+
     public static CrimeLab getCrimeLab(Context context) {
-        if (sCrimeLab==null){
+        if (sCrimeLab == null) {
             sCrimeLab = new CrimeLab(context);
         }
         return sCrimeLab;
     }
 
-    public void addCrime(Crime crime){
-        mCrimes.add(crime);
+    public void addCrime(Crime crime) {
+        ContentValues values = getContentValues(crime);
+        mDatabase.insert(CrimeTable.NAME, null, values);
     }
 }
