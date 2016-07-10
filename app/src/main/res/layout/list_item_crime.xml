@@ -14,6 +14,7 @@
         tools:text="Crime Title" />
 
     <CheckBox
+        android:clickable="false"
         android:id="@+id/list_item_crime_solved_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

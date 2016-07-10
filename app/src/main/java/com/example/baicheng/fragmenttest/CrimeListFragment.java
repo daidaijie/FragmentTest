@@ -51,7 +51,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (savedInstanceState!=null){
+        if (savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
 
@@ -70,7 +70,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(SAVED_SUBTITLE_VISIBLE,mSubtitleVisible);
+        outState.putBoolean(SAVED_SUBTITLE_VISIBLE, mSubtitleVisible);
     }
 
     private void updateUI() {
@@ -80,6 +80,7 @@ public class CrimeListFragment extends Fragment {
             mCrimeAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mCrimeAdapter);
         } else {
+            mCrimeAdapter.setCrimes(crimes);
             mCrimeAdapter.notifyDataSetChanged();
         }
         updateSubtitle();
@@ -145,6 +146,10 @@ public class CrimeListFragment extends Fragment {
         private List<Crime> mCrimes;
 
         private CrimeAdapter(List<Crime> mCrimes) {
+            this.mCrimes = mCrimes;
+        }
+
+        public void setCrimes(List<Crime> mCrimes) {
             this.mCrimes = mCrimes;
         }
 

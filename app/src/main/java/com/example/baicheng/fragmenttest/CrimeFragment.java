@@ -56,12 +56,19 @@ public class CrimeFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID crimeID = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.getCrimeLab(getActivity()).getCrime(crimeID);
 //        Toast.makeText(getActivity(), "" + (mCrime == null), Toast.LENGTH_SHORT).show();
         returnResult();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        CrimeLab.getCrimeLab(getActivity()).updateCrime(mCrime);
     }
 
     @Override
