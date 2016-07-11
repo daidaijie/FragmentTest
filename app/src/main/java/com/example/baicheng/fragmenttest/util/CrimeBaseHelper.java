@@ -7,6 +7,7 @@ import android.drm.DrmStore;
 
 import com.example.baicheng.fragmenttest.dao.CrimeDbSchema;
 import com.example.baicheng.fragmenttest.dao.CrimeDbSchema.CrimeTable;
+import com.example.baicheng.fragmenttest.model.Crime;
 
 /**
  * Created by baicheng on 2016/7/8.
@@ -27,7 +28,8 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
                 CrimeTable.Cols.UUID + ", " +
                 CrimeTable.Cols.TITLE + ", " +
                 CrimeTable.Cols.DATE + ", " +
-                CrimeTable.Cols.SOLVED +  ")"
+                CrimeTable.Cols.SOLVED + ", " +
+                CrimeTable.Cols.SUSPECT + ")"
         );
 
     }
